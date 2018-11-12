@@ -75,13 +75,9 @@ def pop_state():
     if (len(stack) > 0):
         stack[-1].resume()
 
-
-
 def quit():
     global running
     running = False
-
-
 
 import time
 frame_time = 0.0
