@@ -52,16 +52,12 @@ def change_state(state):
     stack.append(state)
     state.enter()
 
-
-
 def push_state(state):
     global stack
     if (len(stack) > 0):
         stack[-1].pause()
     stack.append(state)
     state.enter()
-
-
 
 def pop_state():
     global stack
@@ -103,12 +99,9 @@ def run(start_state):
         stack[-1].exit()
         stack.pop()
 
-
 def test_game_framework():
     start_state = TestGameState('StartState')
     run(start_state)
-
-
 
 if __name__ == '__main__':
     test_game_framework()
