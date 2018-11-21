@@ -122,7 +122,6 @@ class RunState:
 next_state_table = {
     IdleState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState, UP_UP: IdleState, DOWN_UP: IdleState, UP_DOWN: RunState, DOWN_DOWN: RunState, DOWN_X : IdleState, DOWN_SPACE : IdleState},
     RunState: {RIGHT_UP: RunState, LEFT_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, UP_UP: RunState, DOWN_UP: RunState, UP_DOWN: RunState, DOWN_DOWN: RunState, DOWN_X: RunState, DOWN_SPACE : RunState }
-
 }
 
 class Heroine:
@@ -139,8 +138,6 @@ class Heroine:
         self.cur_state = IdleState
         self.cur_state.enter(self, None)
         self.special_count = 3
-
-
 
     def shoot_bullet(self):
         bullet = My_Bullet(self.x, self.y, self.bulletdir*RUN_SPEED_PPS * 0.05)
