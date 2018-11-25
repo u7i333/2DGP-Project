@@ -21,6 +21,10 @@ class My_Bullet:
             My_Bullet.image = load_image('bullet.png')
         self.x, self.y, self.velocity = x, y, velocity
 
+    def get_bb(self):
+        # fill here
+        return self.x - 10, self.y - 10, self.x + 10, self.y + 10
+
 
     def draw(self):
         self.image.draw(self.x, self.y)
