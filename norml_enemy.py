@@ -5,6 +5,7 @@ from enemy_bullet import Blue_Enemy_Bullet
 from enemy_bullet import Black_Enemy_Bullet
 from enemy_bullet import Red_Enemy_Bullet
 from enemy_bullet import Green_Enemy_Bullet
+import main_state
 
 PIXEL_PER_METER = (10.0 /0.3)
 RUN_SPEED_KMPH = 20.0
@@ -34,6 +35,9 @@ class Blue_enemy:
     def draw(self):
         self.image.clip_draw(int(self.frame) * 50, 0, 50, 50, self.x, self.y)
 
+    def get_bb(self):
+        return self.x - 25, self.y - 25,  self.x + 25, self.y + 25
+
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
@@ -42,10 +46,11 @@ class Blue_enemy:
             Blue_enemy.shoot_enemy_bullet(self)
             self.time = get_time()
 
-        self.x = self.x - 1
+        self.x = self.x - 0.5
 
         if self.x <= 25:
             game_world.remove_object(self)
+
 
 class Green_enemy:
 

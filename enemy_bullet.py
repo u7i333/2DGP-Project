@@ -1,6 +1,7 @@
 from pico2d import *
 import game_world
 import game_framework
+import main_state
 
 class Blue_Enemy_Bullet:
     image = None
@@ -10,6 +11,8 @@ class Blue_Enemy_Bullet:
             Blue_Enemy_Bullet.image = load_image('blue_enemy_bullet.png')
         self.x, self.y, self.velocity = x, y, velocity
 
+    def get_bb(self):
+        return self.x - 10, self.y - 10,  self.x + 10, self.y + 10
 
     def draw(self):
         self.image.draw(self.x, self.y)
@@ -18,6 +21,8 @@ class Blue_Enemy_Bullet:
         self.y -= self.velocity
         if self.y < 25 or self.y > 800 - 25:
             game_world.remove_object(self)
+        if main_state.collide(main_state.heroine, self):
+            game_world.remove_object(main_state.heroine)
 
 
 class Black_Enemy_Bullet:

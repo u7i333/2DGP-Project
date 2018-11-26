@@ -3,6 +3,7 @@ from pico2d import *
 from my_bullet import My_Bullet
 from my_bullet import Speciel_Bullet
 
+
 import random
 import game_world
 
@@ -122,6 +123,7 @@ class RunState:
 next_state_table = {
     IdleState: {RIGHT_UP: IdleState, LEFT_UP: IdleState, RIGHT_DOWN: RunState, LEFT_DOWN: RunState, UP_UP: IdleState, DOWN_UP: IdleState, UP_DOWN: RunState, DOWN_DOWN: RunState, DOWN_X : IdleState, DOWN_SPACE : IdleState},
     RunState: {RIGHT_UP: RunState, LEFT_UP: RunState, LEFT_DOWN: RunState, RIGHT_DOWN: RunState, UP_UP: RunState, DOWN_UP: RunState, UP_DOWN: RunState, DOWN_DOWN: RunState, DOWN_X: RunState, DOWN_SPACE : RunState }
+
 }
 
 class Heroine:
@@ -139,6 +141,8 @@ class Heroine:
         self.cur_state.enter(self, None)
         self.special_count = 3
 
+
+
     def shoot_bullet(self):
         bullet = My_Bullet(self.x, self.y, self.bulletdir*RUN_SPEED_PPS * 0.05)
         game_world.add_object(bullet, 1)
@@ -152,10 +156,6 @@ class Heroine:
     def add_event(self, event):
         self.event_que.insert(0, event)
 
-    def get_bb(self):
-        # fill here
-        return self.x - 50, self.y - 50, self.x + 50, self.y + 50
-
     def update(self):
         self.cur_state.do(self)
         if len(self.event_que) > 0:
@@ -164,6 +164,9 @@ class Heroine:
             self.cur_state = next_state_table[self.cur_state][event]
             self.cur_state.enter(self, event)
 
+
+
+
     def draw(self):
         self.cur_state.draw(self)
 
@@ -171,4 +174,7 @@ class Heroine:
         if (event.type, event.key) in key_event_table:
             key_event = key_event_table[(event.type, event.key)]
             self.add_event(key_event)
+
+    def get_bb(self):
+        return self.x - 50, self.y - 50,  self.x + 50, self.y + 50
 
