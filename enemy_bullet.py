@@ -34,6 +34,9 @@ class Black_Enemy_Bullet:
         self.x, self.y, self.velocity = x, y, velocity
 
 
+    def get_bb(self):
+        return self.x - 10, self.y - 10,  self.x + 10, self.y + 10
+
     def draw(self):
         self.image.draw(self.x, self.y)
 
@@ -41,7 +44,8 @@ class Black_Enemy_Bullet:
         self.y -= self.velocity
         if self.y < 25 or self.y > 800 - 25:
             game_world.remove_object(self)
-
+        if main_state.collide(main_state.heroine, self):
+            game_world.remove_object(main_state.heroine)
 
 class Red_Enemy_Bullet:
     image = None
@@ -51,6 +55,9 @@ class Red_Enemy_Bullet:
             Red_Enemy_Bullet.image = load_image('red_enemy_bullet.png')
         self.x, self.y, self.velocity = x, y, velocity
 
+    def get_bb(self):
+        return self.x - 10, self.y - 10,  self.x + 10, self.y + 10
+
     def draw(self):
         self.image.draw(self.x, self.y)
 
@@ -58,7 +65,8 @@ class Red_Enemy_Bullet:
         self.y -= self.velocity
         if self.y < 25 or self.y > 800 - 25:
             game_world.remove_object(self)
-
+        if main_state.collide(main_state.heroine, self):
+            game_world.remove_object(main_state.heroine)
 
 class Green_Enemy_Bullet:
     image = None
@@ -68,6 +76,9 @@ class Green_Enemy_Bullet:
             Green_Enemy_Bullet.image = load_image('green_enemy_bullet.png')
         self.x, self.y, self.velocity = x, y, velocity
 
+    def get_bb(self):
+        return self.x - 10, self.y - 10,  self.x + 10, self.y + 10
+
     def draw(self):
         self.image.draw(self.x, self.y)
 
@@ -75,7 +86,8 @@ class Green_Enemy_Bullet:
         self.y -= self.velocity
         if self.y < 25 or self.y > 800 - 25:
             game_world.remove_object(self)
-
+        if main_state.collide(main_state.heroine, self):
+            game_world.remove_object(main_state.heroine)
 
 class Star_Bullet:
     image = None
@@ -88,10 +100,15 @@ class Star_Bullet:
     def draw(self):
         self.image.clip_draw(int(self.frame) * 50, 0, 50, 50, self.x, self.y)
 
+    def get_bb(self):
+        return self.x - 25, self.y - 25,  self.x + 25, self.y + 25
+
     def update(self):
-        self.y -= self.velocity*5
+        self.y -= self.velocity*2
         if self.y < 25 or self.y > 800 - 25:
             game_world.remove_object(self)
+        if main_state.collide(main_state.heroine, self):
+            game_world.remove_object(main_state.heroine)
 
 
 class Bose_Laser_Bullet:
@@ -106,6 +123,9 @@ class Bose_Laser_Bullet:
         self.time = 0
         self.count = 0
 
+    def get_bb(self):
+        return self.x - 150, self.y - 375,  self.x + 150, self.y + 375
+
     def draw(self):
         #self.image.clip_draw(125 - self.drawframeX, 0, 50+self.sizeframeX, 50+self.sizeframeY, self.x, self.y-400)
         self.image.clip_draw(300 * self.frame, 0, 300, 750, self.x, self.y-400)
@@ -114,5 +134,8 @@ class Bose_Laser_Bullet:
         if get_time() - self.bullettime > 0.05:
             self.frame = (self.frame + 1) % 11
             self.bullettime = get_time()
+        if self.frame > 5:
+            if main_state.collide(main_state.heroine, self):
+                game_world.remove_object(main_state.heroine)
         if self.frame > 9 :
             game_world.remove_object(self)

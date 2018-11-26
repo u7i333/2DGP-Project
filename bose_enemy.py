@@ -34,6 +34,9 @@ class Bose_enemy:
         enemy_bullet = Star_Bullet(self.x, self.y, self.bulletdir, self.bulletcolor)
         game_world.add_object(enemy_bullet, 1)
 
+    def get_bb(self):
+        return self.x - 50, self.y - 50,  self.x + 50, self.y + 50
+
     def shoot_laser_bullet(self):
         enemy_laser_bullet = Bose_Laser_Bullet(self.x,self.y)
         game_world.add_object(enemy_laser_bullet, 1)
@@ -50,7 +53,7 @@ class Bose_enemy:
         self.frame = (self.frame + 0.1) % 4
 
         if (self.count == 0):
-            self.velocity = 1
+            self.velocity = 0.5
             self.y = self.y - self.velocity
             if (self.y < 750):
                 self.count = 1
@@ -62,7 +65,7 @@ class Bose_enemy:
             self.time = get_time()
 
         if(self.count == 0):
-            self.velocity = 1
+            self.velocity = 0.5
             self.y = self.y - self.velocity
             if(self.y < 750):
                 self.count = 1
@@ -75,12 +78,12 @@ class Bose_enemy:
 
         if (self.count == 2):
             self.velocity = 0
-            self.x += 1
+            self.x += 0.5
             if (self.x > 550):
                 self.count = 3
 
         if(self.count == 3):
-            self.velocity = 1
+            self.velocity = 0.5
             self.x -= self.velocity
             self.y += self.velocity*0.3
             if(self.x <= 300):
@@ -96,7 +99,7 @@ class Bose_enemy:
 
         if(self.count == 5):
             self.velocity = 0
-            self.x += 1
+            self.x += 0.5
             if (self.x > 550):
                 self.count = 0
 

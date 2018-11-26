@@ -42,6 +42,9 @@ class My_Bullet:
             if main_state.collide(main_state.blue_enemys1[i], self):
                 game_world.remove_object(main_state.blue_enemys1[i])
 
+        if main_state.collide(main_state.bose_enemy, self):
+            game_world.remove_object(main_state.bose_enemy)
+
 class Speciel_Bullet:
     image = None
 

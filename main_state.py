@@ -23,6 +23,7 @@ map = None
 heroine = None
 blue_enemy = None
 blue_enemys1 = None
+bose_enemy = None
 
 class Map:
     y = 0
@@ -54,7 +55,7 @@ def collide(a, b):
     return True
 
 def enter():
-    global map, heroine, blue_enemy, blue_enemys1
+    global map, heroine, blue_enemy, blue_enemys1, bose_enemy
     map = Map()
     heroine = Heroine()
     blue_enemy = Blue_enemy(600, 400)
@@ -62,7 +63,7 @@ def enter():
     #global summontime
     #summontime = get_time()
     blue_enemys1 = [Blue_enemy(i, j) for (i, j) in [(600, 500), (650, 500), (700, 500)]]
-
+    bose_enemy = Bose_enemy(300, 800)
 
 def exit():
     global map
@@ -100,6 +101,8 @@ def update():
         for i in range(0, 3):
             game_world.add_object(blue_enemys1[i], 1)
 
+    if(map.y == 100):
+        game_world.add_object(bose_enemy, 1)
 
     """
     blue_enemy1 = [Blue_enemy(i,j) for (i,j) in [(600,500),(650,500),(700,500)] ]
