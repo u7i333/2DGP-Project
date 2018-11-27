@@ -28,10 +28,11 @@ class My_Bullet:
         self.image.draw(self.x, self.y)
 
     def get_bb(self):
-        return self.x - 10, self.y - 10,  self.x + 10, self.y + 10
+        return self.x - 10, self.y - 20,  self.x + 10, self.y + 20
 
     def update(self):
         self.y += self.velocity
+
         if self.y < 25 or self.y > 800 - 25:
             game_world.remove_object(self)
 
@@ -44,6 +45,10 @@ class My_Bullet:
 
         if main_state.collide(main_state.bose_enemy, self):
             game_world.remove_object(main_state.bose_enemy)
+
+        for i in range(0, 3):
+            if main_state.collide(main_state.black_enemys1[i], self):
+                game_world.remove_object(main_state.black_enemys1[i])
 
 class Speciel_Bullet:
     image = None

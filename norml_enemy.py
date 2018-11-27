@@ -5,6 +5,7 @@ from enemy_bullet import Blue_Enemy_Bullet
 from enemy_bullet import Black_Enemy_Bullet
 from enemy_bullet import Red_Enemy_Bullet
 from enemy_bullet import Green_Enemy_Bullet
+from enemy_bullet import Special_Enemy_Bullet
 import main_state
 
 PIXEL_PER_METER = (10.0 /0.3)
@@ -46,7 +47,7 @@ class Blue_enemy:
             Blue_enemy.shoot_enemy_bullet(self)
             self.time = get_time()
 
-        self.x = self.x - 0.5
+        self.x = self.x - 0.2
 
         if self.x <= 25:
             game_world.remove_object(self)
@@ -68,15 +69,17 @@ class Green_enemy:
     def draw(self):
         self.image.clip_draw(int(self.frame) * 50, 0, 50, 50, self.x, self.y)
 
+    def get_bb(self):
+        return self.x - 25, self.y - 25,  self.x + 25, self.y + 25
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
 
-        if(get_time() - self.time > 1):
+        if(get_time() - self.time > 0.5):
             Green_enemy.shoot_enemy_bullet(self)
             self.time = get_time()
 
-        self.x = self.x - 1
+        self.x = self.x - 0.2
 
         if self.x <= 25:
             game_world.remove_object(self)
@@ -98,6 +101,8 @@ class Black_enemy:
     def draw(self):
         self.image.clip_draw(int(self.frame) * 50, 0, 50, 50, self.x, self.y)
 
+    def get_bb(self):
+        return self.x - 25, self.y - 25,  self.x + 25, self.y + 25
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
@@ -106,7 +111,7 @@ class Black_enemy:
             Black_enemy.shoot_enemy_bullet(self)
             self.time = get_time()
 
-        self.x = self.x + 1
+        self.x = self.x + 0.2
 
         if self.x >= 600:
             game_world.remove_object(self)
@@ -128,15 +133,56 @@ class Red_enemy:
     def draw(self):
         self.image.clip_draw(int(self.frame) * 50, 0, 50, 50, self.x, self.y)
 
+    def get_bb(self):
+        return self.x - 25, self.y - 25,  self.x + 25, self.y + 25
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
 
-        if(get_time() - self.time > 1):
+        if(get_time() - self.time > 0.5):
             Red_enemy.shoot_enemy_bullet(self)
             self.time = get_time()
 
-        self.x = self.x + 1
+        self.x = self.x + 0.2
+
+        if self.x >= 600:
+            game_world.remove_object(self)
+
+class Special_enemy:
+
+    def __init__(self,x = 400 ,y = 300):
+        Special_enemy.image = load_image('special_enemy.png')
+        self.x , self.y = x, y
+        self.frame = 0
+        self.bulletdir = 1
+        self.time = get_time()
+
+    def shoot_enemy_bullet(self):
+        enemy_bullet1 = Special_Enemy_Bullet(self.x, self.y, 1,1)
+        enemy_bullet2 = Special_Enemy_Bullet(self.x, self.y, 0.5, 1)
+        enemy_bullet3 = Special_Enemy_Bullet(self.x, self.y, 0, 1)
+        enemy_bullet4 = Special_Enemy_Bullet(self.x, self.y, -0.5, 1)
+        enemy_bullet5 = Special_Enemy_Bullet(self.x, self.y, -1, 1)
+        game_world.add_object(enemy_bullet1, 1)
+        game_world.add_object(enemy_bullet2, 1)
+        game_world.add_object(enemy_bullet3, 1)
+        game_world.add_object(enemy_bullet4, 1)
+        game_world.add_object(enemy_bullet5, 1)
+
+    def draw(self):
+        self.image.clip_draw(int(self.frame) * 75, 0, 75, 75, self.x, self.y)
+
+    def get_bb(self):
+        return self.x - 25, self.y - 25,  self.x + 25, self.y + 25
+
+    def update(self):
+        self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
+
+        if(get_time() - self.time > 0.7):
+            Special_enemy.shoot_enemy_bullet(self)
+            self.time = get_time()
+
+        self.y = self.y - 0.1
 
         if self.x >= 600:
             game_world.remove_object(self)

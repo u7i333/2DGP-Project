@@ -14,6 +14,8 @@ from norml_enemy import Black_enemy
 from norml_enemy import Red_enemy
 from norml_enemy import Green_enemy
 from bose_enemy import Bose_enemy
+from norml_enemy import Special_enemy
+
 from enemy_bullet import Blue_Enemy_Bullet
 
 name = "MainState"
@@ -55,15 +57,19 @@ def collide(a, b):
     return True
 
 def enter():
-    global map, heroine, blue_enemy, blue_enemys1, bose_enemy
+    global map, heroine, blue_enemy, blue_enemys1,black_enemys1, bose_enemy, red_enemy, green_enemy, special_enemy
     map = Map()
     heroine = Heroine()
     blue_enemy = Blue_enemy(600, 400)
     game_world.add_object(heroine, 1)
     #global summontime
     #summontime = get_time()
-    blue_enemys1 = [Blue_enemy(i, j) for (i, j) in [(600, 500), (650, 500), (700, 500)]]
+    blue_enemys1 = [Blue_enemy(i, j) for (i, j) in [(600, 700), (650, 700), (700, 700)]]
+    black_enemys1 = [Black_enemy(i, j) for (i, j) in [(0, 700), (-50, 700), (-100, 700)]]
     bose_enemy = Bose_enemy(300, 800)
+    red_enemy = Red_enemy(0,700)
+    green_enemy = Green_enemy(600, 700)
+    special_enemy = Special_enemy(300,810)
 
 def exit():
     global map
@@ -94,68 +100,34 @@ def update():
     for game_object in game_world.all_objects():
         game_object.update()
 
-    if (map.y == 1):
+    if(map.y == 100):
+        game_world.add_object(bose_enemy, 1)
+
+    """
+        if (map.y == 1):
         game_world.add_object(blue_enemy, 1)
 
     if(map.y == 50):
         for i in range(0, 3):
             game_world.add_object(blue_enemys1[i], 1)
 
-    if(map.y == 100):
-        game_world.add_object(bose_enemy, 1)
-
-    """
-    blue_enemy1 = [Blue_enemy(i,j) for (i,j) in [(600,500),(650,500),(700,500)] ]
-    red_enemy = [Red_enemy(i,j) for (i,j) in [(0,500),(-50,500),(-100,500)] ]
-    blue_enemy2 = Blue_enemy(600,400)
-    black_enemy = Black_enemy(0,450)
-    green_enemy = Green_enemy(600,450)
-   
-    
-    blue_enemys1 = [Blue_enemy(i, j) for (i, j) in [(600, 500), (650, 500), (700, 500)]]
-    if (map.y == 1):
-        for i in range(0,3):
-            game_world.add_object(blue_enemys1[i], 1)
-    """
-
-
-    """
-    if (map.y == 1):
-        for i in range(0,3):
-            game_world.add_object(blue_enemy1[i], 1)
-    
-    
-    if (map.y == 50):
+    if(map.y == 200):
         for i in range(0, 3):
-            game_world.add_object(red_enemy[i], 1)
+            game_world.add_object(black_enemys1[i], 1)
 
-    if(map. y == 100):
-        game_world.add_object(black_enemy,1)
-        game_world.add_object(green_enemy,1)
-
-    if (map.y == 200):
-        for i in range(0,3):
-            game_world.add_object(blue_enemy1[i], 1)
-
-    if(map.y == 270):
-        red_enemy = [Red_enemy(i, j) for (i, j) in [(0, 650), (-50, 650), (-100, 650)]]
-        black_enemy = Black_enemy(0,600)
-        green_enemy = Green_enemy(600,600)
-        game_world.add_object(black_enemy,1)
-        game_world.add_object(green_enemy,1)
-
-    if (map.y == 300):
-        for i in range(0, 3):
-            game_world.add_object(red_enemy[i], 1)
-
-    if (map.y == 500):
-        game_world.add_object(blue_enemy2, 1)
+    if(map.y == 350):
+        game_world.add_object(red_enemy, 1)
 
 
-    if (map.y == 1000):
-        bose_enemy = Bose_enemy(300,800)
-        game_world.add_object(bose_enemy, 1)
+    if(map.y == 400):
+        game_world.add_object(green_enemy, 1)
+
+    if(map.y == 500):
+        game_world.add_object(special_enemy,1)
     """
+
+
+
 
 def draw():
     clear_canvas()
