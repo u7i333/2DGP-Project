@@ -5,6 +5,16 @@ import main_state
 import heroine
 
 
+PIXEL_PER_METER = (10.0 /0.3)
+RUN_SPEED_KMPH = 20.0
+RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
+TIME_PER_ACTION = 0.5
+ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
+FRAMES_PER_ACTION = 8
+
 class Blue_Enemy_Bullet:
     image = None
 
@@ -20,7 +30,7 @@ class Blue_Enemy_Bullet:
         self.image.draw(self.x, self.y)
 
     def update(self):
-        self.y -= self.velocity*0.5
+        self.y -= RUN_SPEED_PPS*0.05
         if self.y < 25 or self.y > 800 - 25:
             game_world.remove_object(self)
         if main_state.collide(main_state.heroine, self):
@@ -42,7 +52,7 @@ class Black_Enemy_Bullet:
         self.image.draw(self.x, self.y)
 
     def update(self):
-        self.y -= self.velocity*0.5
+        self.y -= RUN_SPEED_PPS*0.05
         if self.y < 25 or self.y > 800 - 25:
             game_world.remove_object(self)
         if main_state.collide(main_state.heroine, self):
@@ -58,8 +68,8 @@ class Red_Enemy_Bullet:
             Red_Enemy_Bullet.image = load_image('red_enemy_bullet.png')
         self.x, self.y, self.velocity = x, y, velocity
         self.hx, self.hy = main_state.heroine.x, main_state.heroine.y
-        self.countx = (self.hx - self.x)/900
-        self.county = (self.hy - self.y)/900
+        self.countx = (self.hx - self.x)/900 * RUN_SPEED_PPS*0.05
+        self.county = (self.hy - self.y)/900 * RUN_SPEED_PPS*0.05
 
     def get_bb(self):
         return self.x - 5, self.y - 5, self.x + 5, self.y + 5
@@ -88,8 +98,8 @@ class Green_Enemy_Bullet:
             Green_Enemy_Bullet.image = load_image('green_enemy_bullet.png')
         self.x, self.y, self.velocity = x, y, velocity
         self.hx, self.hy = main_state.heroine.x, main_state.heroine.y
-        self.countx = (self.hx - self.x) / 900
-        self.county = (self.hy - self.y) / 900
+        self.countx = (self.hx - self.x) / 900 * RUN_SPEED_PPS*0.05
+        self.county = (self.hy - self.y) / 900 * RUN_SPEED_PPS*0.05
 
     def get_bb(self):
         return self.x - 5, self.y - 5, self.x + 5, self.y + 5
@@ -147,7 +157,7 @@ class Star_Bullet:
         return self.x - 15, self.y - 15,  self.x + 15, self.y + 15
 
     def update(self):
-        self.y -= self.velocity
+        self.y -= RUN_SPEED_PPS*0.05
         if self.y < 25 or self.y > 800 - 25:
             game_world.remove_object(self)
         if main_state.collide(main_state.heroine, self):

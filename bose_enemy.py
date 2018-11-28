@@ -5,6 +5,7 @@ from enemy_bullet import Star_Bullet
 from enemy_bullet import Bose_Laser_Bullet
 from enemy_bullet import Special_Enemy_Bullet
 from enemy_bullet import Red_Enemy_Bullet
+import main_state
 
 PIXEL_PER_METER = (10.0 /0.3)
 RUN_SPEED_KMPH = 20.0
@@ -28,7 +29,7 @@ class Bose_enemy:
         self.count = 0
         self.time = get_time()
         self.framecount = 0
-        self.velocity = 0
+        self.velocity = RUN_SPEED_PPS * 0.05
         self.bulletcolor = 0
         self.lasertimer = 0
         self.count3count = 0
@@ -36,6 +37,7 @@ class Bose_enemy:
         self.count6count = 0
         self.lasercount = 0
         self.phase = 0
+        self.hp = 50
 
     def shoot_enemy_bullet(self):
         enemy_bullet = Star_Bullet(self.x, self.y, self.bulletdir, self.bulletcolor)
@@ -76,8 +78,13 @@ class Bose_enemy:
     def update(self):
         self.frame = (self.frame + 0.01) % 4
 
+        self.phase = 1
+
+        if(self.hp == 0):
+            game_world.remove_object(self)
+
         if (self.count == 0):
-            self.velocity = 0.5
+            #self.velocity = 0.5
             self.y = self.y - self.velocity
             if (self.y < 750):
                 self.count = 1
@@ -87,29 +94,22 @@ class Bose_enemy:
             self.bulletcolor = (self.bulletcolor+1)%7
             self.time = get_time()
 
-
-        if(self.count == 0):
-            self.velocity = 0.5
-            self.y = self.y - self.velocity
-            if(self.y < 750):
-                self.count = 1
-
         if(self.count == 1):
             self.x -= self.velocity
-            self.y -= self.velocity*0.3
+            self.y -= self.velocity*0.5
             if (self.x < 50):
                  self.count = 2
 
         if (self.count == 2):
-            self.velocity = 0
-            self.x += 0.5
+            #self.velocity = 0
+            self.x += self.velocity
             if (self.x > 550):
                 self.count = 3
 
         if(self.count == 3):
-            self.velocity = 0.5
+            #self.velocity = 0.5
             self.x -= self.velocity
-            self.y += self.velocity*0.3
+            self.y += self.velocity*0.5
 
             if(self.x <= 300):
                 if(self.count3count < 3):
@@ -118,15 +118,17 @@ class Bose_enemy:
                 if(self.count3count == 3):
                     self.count3count = 0
                     self.count = 4
-                    self.velocity = 0
+                    #self.velocity = 0
 
-        if(self.count == 4):
+        if(self.count == 4 and self.hp < 5):
             Bose_enemy.shoot_laser_bullet(self)
             if(self.lasertimer == 0):
                 self.lasertimer = get_time()
             if(get_time() - self.lasertimer > 1):
                 self.lasertimer = 0
                 self.count = 5
+        elif (self.count == 4):
+            self.count = 5
 
         if (self.count == 5):
             if(get_time()- self.time > 3.1):
@@ -136,7 +138,7 @@ class Bose_enemy:
                 self.time = get_time()
 
         if(self.count == 6):
-            self.velocity = 0.5
+            #self.velocity = 0.5
             self.x += self.velocity * self.count6dir
             if(self.x > 550):
                 self.count6dir = -1
@@ -146,25 +148,27 @@ class Bose_enemy:
             if (get_time() - self.time > 0.7):
                 Bose_enemy.shoot_special_bullet(self)
                 self.time = get_time()
-            if(self.count6count == 3):
+            if(self.count6count == 5):
                 self.count = 7
                 self.count6count = 0
 
         if(self.count == 7):
-            self.velocity = 0.5
+            #self.velocity = 0.5
             self.x += self.velocity
 
             if (self.x >= 300):
                 self.count = 8
-                self.velocity = 0
+                #self.velocity = 0
 
-        if (self.count == 8):
+        if (self.count == 8 and self.hp < 10):
             Bose_enemy.shoot_laser_bullet(self)
             if (self.lasertimer == 0):
                 self.lasertimer = get_time()
             if (get_time() - self.lasertimer > 1):
                 self.lasertimer = 0;
                 self.count = 9
+        elif(self.count == 8):
+            self.count = 0
 
         if (self.count == 9):
             if (get_time() - self.time > 3.1):

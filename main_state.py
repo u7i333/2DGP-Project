@@ -21,11 +21,25 @@ from enemy_bullet import Blue_Enemy_Bullet
 name = "MainState"
 
 
+PIXEL_PER_METER = (10.0 /0.3)
+RUN_SPEED_KMPH = 20.0
+RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
+TIME_PER_ACTION = 0.5
+ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
+FRAMES_PER_ACTION = 8
+
+
 map = None
 heroine = None
 blue_enemy = None
 blue_enemys1 = None
 bose_enemy = None
+red_enemy = None
+green_enemy = None
+special_enemy = None
 
 class Map:
     y = 0
@@ -100,11 +114,10 @@ def update():
     for game_object in game_world.all_objects():
         game_object.update()
 
-    if(map.y == 100):
+    if(map.y == 1000):
         game_world.add_object(bose_enemy, 1)
 
-    """
-        if (map.y == 1):
+    if (map.y == 1):
         game_world.add_object(blue_enemy, 1)
 
     if(map.y == 50):
@@ -124,7 +137,7 @@ def update():
 
     if(map.y == 500):
         game_world.add_object(special_enemy,1)
-    """
+
 
 
 
