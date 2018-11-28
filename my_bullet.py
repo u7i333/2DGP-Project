@@ -31,24 +31,38 @@ class My_Bullet:
         return self.x - 10, self.y - 20,  self.x + 10, self.y + 20
 
     def update(self):
-        self.y += self.velocity
+        #self.y += self.velocity
+        self.y += RUN_SPEED_PPS*0.2
 
         if self.y < 25 or self.y > 800 - 25:
             game_world.remove_object(self)
 
         if main_state.collide(main_state.blue_enemy, self):
-            game_world.remove_object(main_state.blue_enemy)
+            main_state.blue_enemy.hp -= 1
+            #game_world.remove_object(main_state.blue_enemy)
 
         for i in range(0, 3):
             if main_state.collide(main_state.blue_enemys1[i], self):
-                game_world.remove_object(main_state.blue_enemys1[i])
+                main_state.blue_enemys1[i].hp -= 1
+                #game_world.remove_object(main_state.blue_enemys1[i])
 
         if main_state.collide(main_state.bose_enemy, self):
-            game_world.remove_object(main_state.bose_enemy)
+            main_state.bose_enemy.hp -= 1
+            #game_world.remove_object(main_state.bose_enemy)
 
         for i in range(0, 3):
             if main_state.collide(main_state.black_enemys1[i], self):
-                game_world.remove_object(main_state.black_enemys1[i])
+                main_state.black_enemys1[i].hp -= 1
+                #game_world.remove_object(main_state.black_enemys1[i])
+
+        if main_state.collide(main_state.red_enemy, self):
+            main_state.red_enemy.hp -= 1
+
+        if main_state.collide(main_state.green_enemy, self):
+            main_state.green_enemy.hp -= 1
+
+        if main_state.collide(main_state.special_enemy, self):
+            main_state.special_enemy.hp -= 1
 
 class Speciel_Bullet:
     image = None

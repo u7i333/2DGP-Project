@@ -28,6 +28,7 @@ class Blue_enemy:
         self.frame = 0
         self.bulletdir = 1
         self.time = get_time()
+        self.hp = 1
 
     def shoot_enemy_bullet(self):
         enemy_bullet = Blue_Enemy_Bullet(self.x, self.y,self.bulletdir * RUN_SPEED_PPS * 0.01)
@@ -42,12 +43,13 @@ class Blue_enemy:
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
-
+        if (self.hp == 0):
+            game_world.remove_object(self)
         if(get_time() - self.time > 1):
             Blue_enemy.shoot_enemy_bullet(self)
             self.time = get_time()
 
-        self.x = self.x - 0.2
+        self.x = self.x - RUN_SPEED_PPS*0.005
 
         if self.x <= 25:
             game_world.remove_object(self)
@@ -61,6 +63,7 @@ class Green_enemy:
         self.frame = 0
         self.bulletdir = 1
         self.time = get_time()
+        self.hp = 3
 
     def shoot_enemy_bullet(self):
         enemy_bullet = Green_Enemy_Bullet(self.x, self.y,self.bulletdir * RUN_SPEED_PPS * 0.01)
@@ -78,8 +81,10 @@ class Green_enemy:
         if(get_time() - self.time > 0.5):
             Green_enemy.shoot_enemy_bullet(self)
             self.time = get_time()
+        if (self.hp == 0):
+            game_world.remove_object(self)
 
-        self.x = self.x - 0.2
+        self.x = self.x - RUN_SPEED_PPS*0.005
 
         if self.x <= 25:
             game_world.remove_object(self)
@@ -93,6 +98,7 @@ class Black_enemy:
         self.frame = 0
         self.bulletdir = 1
         self.time = get_time()
+        self.hp = 1
 
     def shoot_enemy_bullet(self):
         enemy_bullet = Black_Enemy_Bullet(self.x, self.y,self.bulletdir * RUN_SPEED_PPS * 0.01)
@@ -106,12 +112,13 @@ class Black_enemy:
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
-
+        if (self.hp == 0):
+            game_world.remove_object(self)
         if(get_time() - self.time > 1):
             Black_enemy.shoot_enemy_bullet(self)
             self.time = get_time()
 
-        self.x = self.x + 0.2
+        self.x = self.x + RUN_SPEED_PPS*0.005
 
         if self.x >= 600:
             game_world.remove_object(self)
@@ -125,6 +132,7 @@ class Red_enemy:
         self.frame = 0
         self.bulletdir = 1
         self.time = get_time()
+        self.hp = 3
 
     def shoot_enemy_bullet(self):
         enemy_bullet = Red_Enemy_Bullet(self.x, self.y,self.bulletdir * RUN_SPEED_PPS * 0.01)
@@ -142,8 +150,9 @@ class Red_enemy:
         if(get_time() - self.time > 0.5):
             Red_enemy.shoot_enemy_bullet(self)
             self.time = get_time()
-
-        self.x = self.x + 0.2
+        if (self.hp == 0):
+            game_world.remove_object(self)
+        self.x = self.x + RUN_SPEED_PPS*0.005
 
         if self.x >= 600:
             game_world.remove_object(self)
@@ -156,6 +165,7 @@ class Special_enemy:
         self.frame = 0
         self.bulletdir = 1
         self.time = get_time()
+        self.hp = 5
 
     def shoot_enemy_bullet(self):
         enemy_bullet1 = Special_Enemy_Bullet(self.x, self.y, 1,1)
@@ -177,12 +187,13 @@ class Special_enemy:
 
     def update(self):
         self.frame = (self.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 4
-
+        if (self.hp == 0):
+            game_world.remove_object(self)
         if(get_time() - self.time > 0.7):
             Special_enemy.shoot_enemy_bullet(self)
             self.time = get_time()
 
-        self.y = self.y - 0.1
+        self.y = self.y - RUN_SPEED_PPS*0.005
 
         if self.x >= 600:
             game_world.remove_object(self)
