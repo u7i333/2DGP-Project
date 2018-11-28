@@ -20,7 +20,6 @@ def handle_events():
         if event.type == SDL_KEYDOWN and event.key == SDLK_p:
             game_framework.pop_state()
 
-
 def draw():
     clear_canvas()
     image.draw(400,300)
